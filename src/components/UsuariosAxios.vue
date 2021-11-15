@@ -36,16 +36,13 @@
       }
     },
     mounted() {
-      this.buscarDatos()
+      this.getPostAxios()
     },
     methods: {
-      async buscarDatos() {
-        this.peticion = true
-        this.usuarios = []
+      async getPostAxios() {
         try {
           let respuesta = await this.axios(this.url)
-          let data = respuesta.data
-         this.usuarios = data
+         this.usuarios = respuesta.data
          this.peticion = false
         }
         catch(err) {

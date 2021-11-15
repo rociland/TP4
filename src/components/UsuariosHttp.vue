@@ -36,49 +36,47 @@
       }
     },
     mounted() {
-      this.buscarDatos()
+      this.getPostPromise()
     },
     methods: {
       postPromise() {
         return new Promise((resolve, reject) => {
-          let req = new XMLHttpRequest()
-          req.open( 'get', this.url )
+          /* Creo la comunicación*/
+          let xhr = new XMLHttpRequest()
+          xhr.open( 'get', this.url )
           
-          req.addEventListener('load', () => {
-            if( req.status == 200 ) {
-              let resp = JSON.parse(req.response)
+          xhr.addEventListener('load', () => {
+             /* Comunicación exitosa */
+            if( xhr.status == 200 ) {
+              let resp = JSON.parse(xhr.response)
               resolve(resp)
-              console.log(resp)
             } else {
               let error = {
                 title: 'Error de status',
-                status: req.status
+                status: xhr.status
               }
               reject(error)
             }
-
           })
-
-          req.addEventListener('error', e => {
+          /* Error de comunicacion*/
+          xhr.addEventListener('error', e => {
             let error = {
               title: 'Error event XHR',
               info: e
             }
             reject(error)
           })
-          req.send()
+          xhr.send()
         })
     },
-    async buscarDatos() {
-      this.usuarios = []
-      this.peticion = true
+    async getPostPromise() {
       try {
         let resp = await this.postPromise()
         this.usuarios = resp
         this.peticion = false
       }
-      catch(err) {
-        console.error(err)
+      catch(e) {
+        console.error(e)
       }
     },
     computed: {

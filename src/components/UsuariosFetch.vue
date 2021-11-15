@@ -35,20 +35,18 @@
       }
     },
     mounted() {
-      this.buscarDatos()
+      this.getPostFetch()
     },
     methods: {
-      async buscarDatos() {
-        this.usuarios = []
-        this.peticion = true
+      async getPostFetch() {
         try {
           var respuesta = await fetch( this.url)
           var datos = await respuesta.json()
           this.usuarios = datos
           this.peticion = false
         }
-        catch(err) {
-          console.error(err)
+        catch(e) {
+          console.error(e)
          }
       }
      
